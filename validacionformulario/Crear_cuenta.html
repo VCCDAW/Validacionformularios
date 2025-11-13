@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><title>Ejercicio 1</title></head>
+<body>
+
+<form id="form">
+  Nombre: <input id="nombre"><br>
+  <span id="errNombre" style="color:red"></span><br>
+
+  Correo: <input id="correo"><br>
+  <span id="errCorreo" style="color:red"></span><br>
+
+  Contraseña: <input type="password" id="pass1"><br>
+  <span id="errPass1" style="color:red"></span><br>
+
+  Repetir contraseña: <input type="password" id="pass2"><br>
+  <span id="errPass2" style="color:red"></span><br>
+
+  <span id="pregunta"></span><br>
+  Respuesta: <input id="resultado"><br>
+  <span id="errResultado" style="color:red"></span><br>
+
+  <input type="checkbox" id="cond"> Acepto las condiciones<br>
+  <input type="submit" id="enviar" value="Crear cuenta" disabled>
+</form>
+
+<script>
+var n1 = Math.floor(Math.random()*10);
+var n2 = Math.floor(Math.random()*10);
+document.getElementById("pregunta").textContent = "¿Cuánto es " + n1 + " + " + n2 + "?";
+
+var boton = document.getElementById("enviar");
+document.getElementById("cond").onchange = function(){
+  boton.disabled = !this.checked;
+};
+
+document.getElementById("form").onsubmit = function(){
+  document.getElementById("errNombre").textContent = "";
+  document.getElementById("errCorreo").textContent = "";
+  document.getElementById("errPass1").textContent = "";
+  document.getElementById("errPass2").textContent = "";
+  document.getElementById("errResultado").textContent = "";
+
+  var nombre = document.getElementById("nombre").value;
+  var correo = document.getElementById("correo").value;
+  var pass1 = document.getElementById("pass1").value;
+  var pass2 = document.getElementById("pass2").value;
+  var resultado = document.getElementById("resultado").value;
+
+  if(nombre.trim() == ""){
+    document.getElementById("errNombre").textContent = "El nombre no puede estar vacío";
+    document.getElementById("nombre").focus(); return false;
+  }
+
+  if(!/^[^@]+@[^@]+\.[a-z]+$/i.test(correo)){
+    document.getElementById("errCorreo").textContent = "Correo no válido";
+    document.getElementById("correo").focus(); return false;
+  }
+
+  if(!/^(?=.*\d).{8,}$/.test(pass1)){
+    document.getElementById("errPass1").textContent = "Debe tener 8 caracteres y al menos un número";
+    document.getElementById("pass1").focus(); return false;
+  }
+
+  if(pass1 != pass2){
+    document.getElementById("errPass2").textContent = "Las contraseñas no coinciden";
+    document.getElementById("pass2").focus(); return false;
+  }
+
+  if(parseInt(resultado) != n1 + n2){
+    document.getElementById("errResultado").textContent = "Resultado incorrecto";
+    document.getElementById("resultado").focus(); return false;
+  }
+ 
+  alert("Formulario correcto");
+  return true;
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 2</title>
+</head>
+<body>
+
+<form id="form2" action="grabar.php" method="post">
+  Usuario: <input type="text" id="usuario"><br>
+  <span id="errUsuario" style="color:red"></span><br>
+
+  Contraseña: <input type="password" id="contrasena"><br>
+  <span id="errContrasena" style="color:red"></span><br>
+
+  Población:
+  <select id="poblacion">
+    <option value="">– Seleccione –</option>
+    <option>Algeciras</option>
+    <option>Arcos de la Frontera</option>
+    <option>Barbate</option>
+    <option>Cádiz</option>
+    <option>Chiclana de la Frontera</option>
+    <option>Conil de la Frontera</option>
+    <option>Jerez de la Frontera</option>
+    <option>San Fernando</option>
+    <option>Sanlúcar de Barrameda</option>
+    <option>Tarifa</option>
+  </select><br>
+  <span id="errPoblacion" style="color:red"></span><br><br>
+
+  <input type="submit" value="Enviar">
+</form>
+
+<script>
+document.getElementById("form2").onsubmit = function(e) {
+  e.preventDefault();
+
+  document.getElementById("errUsuario").textContent = "";
+  document.getElementById("errContrasena").textContent = "";
+  document.getElementById("errPoblacion").textContent = "";
+
+  var usuario = document.getElementById("usuario").value;
+  if (usuario.length < 8 || usuario.indexOf(" ") != -1) {
+    document.getElementById("errUsuario").textContent = "Debe tener 8 caracteres sin espacios";
+    document.getElementById("usuario").focus();
+    return;
+  }
+
+  var pass = document.getElementById("contrasena").value;
+  var tieneMayus = false;
+  var tieneNum = false;
+  for (var i = 0; i < pass.length; i++) {
+    var c = pass.charAt(i);
+    if (c >= "A" && c <= "Z") tieneMayus = true;
+    if (c >= "0" && c <= "9") tieneNum = true;
+  }
+  if (pass.length < 6 || pass.length > 10 || !tieneMayus || !tieneNum) {
+    document.getElementById("errContrasena").textContent = "Debe tener 6-10 caracteres, una mayúscula y un número";
+    document.getElementById("contrasena").focus();
+    return;
+  }
+
+  var poblacion = document.getElementById("poblacion").value;
+  if (poblacion == "") {
+    document.getElementById("errPoblacion").textContent = "Debe elegir una población";
+    document.getElementById("poblacion").focus();
+    return;
+  }
+
+};
+</script>
+
+</body>
+</html>
